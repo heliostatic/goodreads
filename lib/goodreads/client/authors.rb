@@ -1,3 +1,4 @@
+require 'uri'
 module Goodreads
   module Authors
     # Get author details
@@ -12,7 +13,8 @@ module Goodreads
     #
     def author_by_name(name, params={})
       params[:id] = name
-      data = request('/api/author_url', params)
+      name = URI.escape(name)
+      data = request("/api/author_url/#{name}", params)
       Hashie::Mash.new(data['author'])
     end
 
